@@ -3,7 +3,7 @@ package Application.Service;
 import Application.Model.Flight;
 import Application.DAO.FlightDAO;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * The purpose of a Service class is to contain "business logic" that sits between the web layer (controller) and
@@ -53,7 +53,8 @@ public class FlightService {
      *         inform our provide the front-end client with information about the added Flight.
      */
     public Flight addFlight(Flight flight){
-        return null;
+
+        return flightDAO.insertFlight(flight);
     }
 
     /**
@@ -70,7 +71,12 @@ public class FlightService {
      *         user should have some insight if they attempted to edit a nonexistent flight.)
      */
     public Flight updateFlight(int flight_id, Flight flight){
-        return null;
+        if(flightDAO.getFlightById(flight_id) == null){
+            return null;
+        } else{
+            flightDAO.updateFlight(flight_id, flight);
+            return flightDAO.getFlightById(flight_id);
+        }
     }
 
     /**
@@ -80,7 +86,7 @@ public class FlightService {
      * @return all flights in the database.
      */
     public List<Flight> getAllFlights() {
-        return null;
+        return flightDAO.getAllFlights();
     }
 
     /**
@@ -92,6 +98,7 @@ public class FlightService {
      * @return all flights departing from departure_city and arriving at arrival_city.
      */
     public List<Flight> getAllFlightsFromCityToCity(String departure_city, String arrival_city) {
-        return null;
+
+        return flightDAO.getAllFlightsFromCityToCity(departure_city, arrival_city);
     }
 }
